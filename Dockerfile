@@ -8,7 +8,11 @@ RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" > /etc/ap
 RUN echo "deb-src http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/apt/sources.list.d/nginx.list
 
 RUN apt-get update
-RUN apt-get install -y wget nginx
+Run apt-get install -y --no-install-recommends \
+    ca-certificates \
+    nginx \
+    wget
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
