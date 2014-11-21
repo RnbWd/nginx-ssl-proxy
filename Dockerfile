@@ -10,8 +10,7 @@ RUN echo "deb-src http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" >> /
 
 RUN apt-get update && \
     apt-get install --only-upgrade bash && \
-    apt-get install -y  wget nginx && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y wget nginx
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
