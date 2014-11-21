@@ -54,8 +54,8 @@ upstream {{ $host }} {
 {{ end }}
 }
 
-{{ $value := $containers }}
-{{ if $value.Env.REDIRECT }}
+{{ $env := $containers.Env }}
+{{ if $env.REDIRECT }}
 	server {
 		server_name {{ $host }};
 		rewrite ^/(.*) https://{{ $host }}/$1 permanent;
@@ -84,7 +84,6 @@ upstream {{ $host }} {
 			proxy_set_header Connection $proxy_connection;
 		}
 	}
-{{ end }}
 {{ end }}
 	server {
 		gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
