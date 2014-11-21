@@ -1,19 +1,16 @@
 # Pull base image.
-FROM debian:wheezy
+FROM ubuntu:14.04
 
 MAINTAINER David Wisner dwisner6@gmail.com
 
-RUN apt-key adv --keyserver pgp.mit.edu --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
-RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" > /etc/apt/sources.list.d/nginx.list
-RUN echo "deb-src http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/apt/sources.list.d/nginx.list
-
-RUN apt-get update && apt-get install -y \
-        ca-certificates \
-        autoconf \
-        build-essential \
-        nginx \
-        wget \
-    && rm -rf /var/lib/apt/lists/*
+# Install Nginx.
+RUN echo "deb http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" > /etc/apt/sources.list.d/nginx-stable-trusty.list
+RUN echo "deb-src http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" >> /etc/apt/sources.list.d/nginx-stable-trusty.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
+RUN apt-get update
+RUN apt-get install --only-upgrade bash
+RUN apt-get install -y  wget nginx
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
