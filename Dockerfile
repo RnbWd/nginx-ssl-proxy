@@ -7,13 +7,11 @@ RUN apt-key adv --keyserver pgp.mit.edu --recv-keys 573BFD6B3D8FBC641079A6ABABF5
 RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" > /etc/apt/sources.list.d/nginx.list
 RUN echo "deb-src http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/apt/sources.list.d/nginx.list
 
-RUN apt-get update
-Run apt-get install -y --no-install-recommends \
-        ca-certificates \
+RUN apt-get update && apt-get install -y \
+        autoconf \
+        build-essential \
         nginx \
         wget \
-        build-essential \
-        pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
