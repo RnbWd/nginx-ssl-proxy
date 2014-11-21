@@ -55,7 +55,7 @@ upstream {{ $host }} {
 }
 
 {{/* If REDIRECT is not set*/}}
-{{ if $value.Env.REDIRECT }}
+{{ if Env.REDIRECT }}
 	server {
 		server_name {{ $host }};
 		rewrite ^/(.*) https://{{ $host }}/$1 permanent;
