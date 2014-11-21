@@ -8,6 +8,7 @@ RUN echo "deb http://nginx.org/packages/mainline/debian/ wheezy nginx" > /etc/ap
 RUN echo "deb-src http://nginx.org/packages/mainline/debian/ wheezy nginx" >> /etc/apt/sources.list.d/nginx.list
 
 RUN apt-get update && apt-get install -y \
+        ca-certificates \
         autoconf \
         build-essential \
         nginx \
