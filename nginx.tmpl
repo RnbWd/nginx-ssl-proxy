@@ -20,11 +20,10 @@ server {
 	return 503;
 }
 
-{{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" ",", $value := $containers }}
-
+{{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
 upstream {{ $host }} {
 
-{{ range $index }}
+{{ range $index, $value := $containers }}
 
 	{{ $addrLen := len $value.Addresses }}
 	{{/* If only 1 port exposed, use that */}}
@@ -55,7 +54,7 @@ upstream {{ $host }} {
 {{ end }}
 }
 
-{{/* If REDIRECT is not set*/}}
+{{ $value := $containers }}
 {{ if $value.Env.REDIRECT }}
 	server {
 		server_name {{ $host }};
@@ -85,6 +84,7 @@ upstream {{ $host }} {
 			proxy_set_header Connection $proxy_connection;
 		}
 	}
+{{ end }}
 {{ end }}
 	server {
 		gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
