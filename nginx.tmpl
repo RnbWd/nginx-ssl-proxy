@@ -60,7 +60,6 @@ upstream {{ $host }} {
 		server_name {{ $host }};
 		rewrite ^/(.*) https://{{ $host }}/$1 permanent;
 	}
-{{/* Else default to standard web port 80 */}}
 {{ else }}
 	server {
 		gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
@@ -118,4 +117,5 @@ upstream {{ $host }} {
 			# proxy_set_header Connection "";
 	  }	
 	}
+{{ end }}
 {{ end }}
