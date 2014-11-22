@@ -18,6 +18,4 @@ Then start any containers you want proxied with an env var `VIRTUAL_HOST=subdoma
 
     $ docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true ...
 
-## Docker Help
 
-[Docker Cheatsheet](https://github.com/wsargent/docker-cheat-sheet)
