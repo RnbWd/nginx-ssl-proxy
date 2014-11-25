@@ -6,11 +6,10 @@ MAINTAINER David Wisner dwisner6@gmail.com
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
 
 RUN echo "deb http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" > /etc/apt/sources.list.d/nginx-stable-trusty.list
-RUN echo "deb-src http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" >> /etc/apt/sources.list.d/nginx-stable-trusty.list
 
-RUN apt-get update && \
-    apt-get install --only-upgrade bash && \
-    apt-get install -y wget nginx
+RUN apt-get update
+RUN apt-get install -y --only-upgrade bash
+RUN apt-get install -y wget nginx
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
