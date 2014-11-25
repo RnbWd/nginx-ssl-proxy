@@ -7,7 +7,7 @@ Docker nginx reverse proxy based on [nginx-proxy](https://github.com/jwilder/ngi
 
  - To run it
 
-`docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rndwb/nginx-ssl-proxy`
+`docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rnbwd/nginx-ssl-proxy`
 
 Linking ssl certs works the same as the official [nginx dockerfile](https://github.com/dockerfile/nginx).  
 
