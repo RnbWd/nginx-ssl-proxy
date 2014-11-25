@@ -1,7 +1,7 @@
 nginx-ssl-proxy
 ===============
 
-Docker nginx reverse proxy with ssl support - forked from [nginx-proxy](https://github.com/jwilder/nginx-proxy). SSL certs are required to use this image, they are not generated automatically.
+Docker [nginx-proxy](https://github.com/jwilder/nginx-proxy), but with ssl support! SSL certs are required to use this image, they are not generated automatically.
 
 ## Usage
 
