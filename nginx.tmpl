@@ -85,7 +85,6 @@ upstream {{ $host }} {
 	}
 {{ end }}
 	server {
-		gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
 	  listen 443 ssl;
 	  server_name {{ $host }};
@@ -109,8 +108,7 @@ upstream {{ $host }} {
 	    proxy_set_header Host $host;
 	    proxy_set_header X-Real-IP $remote_addr;
 	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-	    proxy_set_header X-Forwarded-Proto https; # help the backend application differenciate between HTTP/HTTPS
-	    proxy_set_header HTTPS on; 
+	    proxy_set_header X-Forwarded-Proto $proxy_x_forwarded_proto; 
 
 	    # HTTP 1.1 support
 			proxy_http_version 1.1;
