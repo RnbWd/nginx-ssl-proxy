@@ -3,6 +3,10 @@ nginx-ssl-proxy
 
 Docker nginx reverse proxy based on [nginx-proxy](https://github.com/jwilder/nginx-proxy), but with ssl support! 
 
+## Stability
+
+Experimental: Expect the unexpected. Please provide feedback on api and your use-case.
+
 ## Usage
 
  - To run it
