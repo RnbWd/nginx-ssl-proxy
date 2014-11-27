@@ -8,7 +8,7 @@ RUN echo "deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu trusty m
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12 
 RUN apt-get update
 RUN apt-get install -y wget 
-RUN apt-get install nginx
+RUN apt-get install -y nginx
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
