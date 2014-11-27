@@ -8,7 +8,7 @@ RUN echo "deb-src http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" >> /
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
 RUN apt-get update
 RUN apt-get install --only-upgrade bash
-RUN apt-get install -y  wget nginx
+RUN apt-get install -y wget nginx
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
