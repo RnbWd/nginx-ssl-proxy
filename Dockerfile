@@ -3,12 +3,14 @@ FROM ubuntu:14.04
 
 MAINTAINER David Wisner dwisner6@gmail.com
 
-RUN echo "deb http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" > /etc/apt/sources.list.d/nginx-stable-trusty.list
-RUN echo "deb-src http://ppa.launchpad.net/nginx/stable/ubuntu trusty main" >> /etc/apt/sources.list.d/nginx-stable-trusty.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
+RUN echo "deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu trusty main " > /etc/apt/sources.list.d/nginx-stable.list
+RUN echo "deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu trusty main " >> /etc/apt/sources.list.d/nginx-stable.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12 
 RUN apt-get update
-RUN apt-get install --only-upgrade bash
-RUN apt-get install -y wget nginx
+# not sure why this here
+# RUN apt-get install --only-upgrade bash
+RUN apt-get install -y wget nginx-full
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
