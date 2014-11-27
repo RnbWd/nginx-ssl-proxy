@@ -1,5 +1,5 @@
 # Pull base image.
-FROM ubuntu:14.04
+FROM ubuntu:14.10
 
 MAINTAINER David Wisner dwisner6@gmail.com
 
