@@ -3,12 +3,13 @@ FROM ubuntu:14.10
 
 MAINTAINER David Wisner dwisner6@gmail.com
 
+# nginx version: nginx/1.7.7
 RUN echo "deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu utopic main " > /etc/apt/sources.list.d/nginx-stable.list
 RUN echo "deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu utopic main " >> /etc/apt/sources.list.d/nginx-stable.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12 
-RUN apt-get update
-RUN apt-get install -y wget 
+RUN apt-get update 
 RUN apt-get install -y nginx
+RUN apt-get install -y wget
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
