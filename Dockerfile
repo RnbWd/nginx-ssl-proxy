@@ -3,19 +3,20 @@ FROM ubuntu:14.04
 
 MAINTAINER David Wisner dwisner6@gmail.com
 
+# nginx version: nginx/1.7.7
 RUN echo "deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu trusty main " > /etc/apt/sources.list.d/nginx-stable.list
 RUN echo "deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu trusty main " >> /etc/apt/sources.list.d/nginx-stable.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7917B12 
 RUN apt-get update
-RUN apt-get install -y wget 
 RUN apt-get install -y nginx
+RUN apt-get install -y wget 
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 VOLUME ["/etc/nginx/certs"]
 
-#fix for long server names
+# fix for long server names
 RUN sed -i 's/# server_names_hash_bucket/server_names_hash_bucket/g' /etc/nginx/nginx.conf
 RUN wget -P /usr/local/bin https://godist.herokuapp.com/projects/ddollar/forego/releases/current/linux-amd64/forego
 RUN chmod u+x /usr/local/bin/forego
