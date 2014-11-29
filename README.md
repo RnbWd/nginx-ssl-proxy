@@ -6,7 +6,7 @@ nginx-ssl-proxy
 
 `docker pull rnbwd/nginx-ssl-proxy`
 
-Tags: *trusty (latest) - utopicxw*
+Tags: *trusty (latest) - utopic*
 
 [docker-badge]: https://img.shields.io/badge/docker-0.1.2-blue.svg?style=flat-square
 [nginx-badge]: https://img.shields.io/badge/nginx-1.7.7-orange.svg?style=flat-square
