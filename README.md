@@ -6,7 +6,7 @@ nginx-ssl-proxy
 
 `docker pull rnbwd/nginx-ssl-proxy`
 
-Tags: *utopic*
+Tags: *trusty (latest) - utopicxw*
 
 [docker-badge]: https://img.shields.io/badge/docker-0.1.2-blue.svg?style=flat-square
 [nginx-badge]: https://img.shields.io/badge/nginx-1.7.7-orange.svg?style=flat-square
@@ -23,7 +23,7 @@ Use env vars to reverse-proxy docker containers
 
 ## Important Info
 
-ssl certificates are connected by host name, **make sure that 'foo.bar.com.crt' and 'foo.bar.com.key' exist in the certs directory (<certs-dir>).**
+ssl certificates are connected by host name, **make sure that 'foo.bar.com.crt' and 'foo.bar.com.key' exist in the certs directory.**
 
 [nginx.tmpl](https://github.com/RnbWd/nginx-ssl-proxy/blob/master/nginx.tmpl) contains nginx config logic
 
