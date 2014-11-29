@@ -21,7 +21,7 @@ docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/do
 
 Use env vars to reverse-proxy docker containers
 
-### Important Info
+## Important Info
 
 ssl certificates are connected by host name, **make sure that 'foo.bar.com.crt' and 'foo.bar.com.key' exist in the certs directory (<certs-dir>).**
 
