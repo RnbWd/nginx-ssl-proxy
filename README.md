@@ -32,9 +32,7 @@ docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true [...]
 ## Links
 
 - [Automated Nginx Reverse Proxy for Docker][1]
-
 - [nginx-proxy][2]
-
 - [docker-gen][3]
 
 ## MIT Licenced
