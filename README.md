@@ -4,13 +4,11 @@ nginx-ssl-proxy
 ## Docker
 
 [![latest][docker-badge]](https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/)
-[![version][version-badge]](#usage)
 [![nginx][nginx-badge]](http://nginx.org/en/CHANGES)
 
 `docker pull rnbwd/nginx-ssl-proxy`
 
-[docker-badge]: https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square
-[version-badge]: https://img.shields.io/badge/version-0.1.2-lightgrey.svg?style=flat-square
+[docker-badge]: https://img.shields.io/badge/docker-0.1.2-blue.svg?style=flat-square
 [nginx-badge]: https://img.shields.io/badge/nginx-1.7.7-orange.svg?style=flat-square
 
  - Usage
