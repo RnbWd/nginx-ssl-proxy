@@ -23,7 +23,7 @@ nginx-ssl-proxy
 [![nginx][nginx-badge][nginx-verion]]
 
 [nginx-badge]: https://img.shields.io/badge/nginx--version-1.7.7-orange.svg?style=flat-square
-[nginx-verson]: http://nginx.org/en/CHANGES
+[nginx-verson]: (http://nginx.org/en/CHANGES)
 
 - SSL certificates are connected by host name, **so make sure that 'foo.bar.com.crt' and 'foo.bar.com.key' exist in the certs directory before running.**
 
