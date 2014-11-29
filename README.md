@@ -3,7 +3,7 @@ nginx-ssl-proxy
 
 ## Docker
 
-[![latest][docker-latest]](https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/)
+[![latest][docker-badge]](https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/)
 [![version][version-badge]](#usage)
 [![nginx][nginx-badge]](http://nginx.org/en/CHANGES)
 
@@ -11,7 +11,8 @@ nginx-ssl-proxy
 
 [docker-badge]: https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square
 [version-badge]: https://img.shields.io/badge/version-0.1.2-lightgrey.svg?style=flat-square
-nginx-badge]: https://img.shields.io/badge/nginx--version-1.7.7-orange.svg?style=flat-square
+[nginx-badge]: https://img.shields.io/badge/nginx-1.7.7-orange.svg?style=flat-square
+
  - Usage
 
 `docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rnbwd/nginx-ssl-proxy`
