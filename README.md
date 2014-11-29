@@ -1,32 +1,29 @@
 nginx-ssl-proxy 
 ===============
 
-##Docker
+## Docker
 
 [![latest][docker-latest]][docker] 
-[![version][version]](#usage)
+[![version][version-badge]](#usage)
 
-<input type="text">rnbwd/nginx-ssl-proxy</input> 
+`docker pull rnbwd/nginx-ssl-proxy`
 
 [docker]: https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/
 [docker-latest]: https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square
-[version]: https://img.shields.io/badge/version-0.1.2-lightgrey.svg?style=flat-square
+[version-badge]: https://img.shields.io/badge/version-0.1.2-lightgrey.svg?style=flat-square
 
-## Usage
-
- - To run it
+ - Usage
 
 `docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rnbwd/nginx-ssl-proxy`
 
-Linking ssl certs works the same as the official [nginx dockerfile](https://github.com/dockerfile/nginx).  
-
-Start any containers you want proxied with an env var `VIRTUAL_HOST=foo.bar.com` and an optional env var `REDIRECT=true` to redirect all requests to HTTPS. 
-
 `docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true ...`
 
-Just switch 'foo.bar.com' with your personal domain name. 
+## Info
 
-## Caveats
+[![nginx][nginx-badge][nginx-verion]]
+
+[nginx-badge]: https://img.shields.io/badge/nginx--version-1.7.7-orange.svg?style=flat-square
+[nginx-verson]: http://nginx.org/en/CHANGES
 
 - SSL certificates are connected by host name, **so make sure that 'foo.bar.com.crt' and 'foo.bar.com.key' exist in the certs directory before running.**
 
@@ -39,3 +36,8 @@ Just switch 'foo.bar.com' with your personal domain name.
 `docker run -it --rm rnbwd/nginx-ssl-proxy nginx -V | grep -i sni`
 
 - This is an experimental fork of [nginx-proxy](https://github.com/jwilder/nginx-proxy), so use at your own risk (or help me make it better and/or integrate with nginx-proxy)
+
+## MIT Licenced
+
+
+
