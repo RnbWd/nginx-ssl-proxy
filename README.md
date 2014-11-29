@@ -3,15 +3,15 @@ nginx-ssl-proxy
 
 ## Docker
 
-[![latest][docker-latest]][docker] 
+[![latest][docker-latest]](https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/)
 [![version][version-badge]](#usage)
+[![nginx][nginx-badge]](http://nginx.org/en/CHANGES)
 
 `docker pull rnbwd/nginx-ssl-proxy`
 
-[docker]: https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/
-[docker-latest]: https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square
+[docker-badge]: https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square
 [version-badge]: https://img.shields.io/badge/version-0.1.2-lightgrey.svg?style=flat-square
-
+nginx-badge]: https://img.shields.io/badge/nginx--version-1.7.7-orange.svg?style=flat-square
  - Usage
 
 `docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rnbwd/nginx-ssl-proxy`
@@ -19,9 +19,6 @@ nginx-ssl-proxy
 `docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true ...`
 
 ## Info
-
-[![nginx][nginx-badge]](http://nginx.org/en/CHANGES)
-[nginx-badge]: https://img.shields.io/badge/nginx--version-1.7.7-orange.svg?style=flat-square
 
 - SSL certificates are connected by host name, **so make sure that 'foo.bar.com.crt' and 'foo.bar.com.key' exist in the certs directory before running.**
 
