@@ -3,9 +3,10 @@ nginx-ssl-proxy
 
 ##Docker
 
-`rnbwd/nginx-ssl-proxy` 
 [![latest][docker-latest]][docker] 
 [![version][version]](#usage)
+
+`rnbwd/nginx-ssl-proxy` 
 
 [docker]: https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/
 [docker-latest]: https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square
