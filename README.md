@@ -1,9 +1,10 @@
 nginx-ssl-proxy
 ===============
 
-Docker nginx reverse proxy based on [nginx-proxy](https://github.com/jwilder/nginx-proxy), but with ssl support! 
+Docker nginx reverse proxy based on [nginx-proxy](https://github.com/jwilder/nginx-proxy), but with ssl support! Uses nginx v
 
-[![experimental](https://img.shields.io/badge/stability-experimental-yellowgreen.svg?style=flat-square)](https://github.com/dominictarr/stability#experimental)
+[![latest](https://img.shields.io/badge/docker-latest-blue.svg?style=flat-square)]https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/)
+![latest](https://img.shields.io/badge/version-0.1.2-lightgrey.svg?style=flat-square)
 
 ## Usage
 
