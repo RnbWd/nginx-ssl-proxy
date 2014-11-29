@@ -6,6 +6,10 @@ nginx-ssl-proxy
 
 `docker pull rnbwd/nginx-ssl-proxy`
 
+Tags: 
+
+- utopic
+
 [docker-badge]: https://img.shields.io/badge/docker-0.1.2-blue.svg?style=flat-square
 [nginx-badge]: https://img.shields.io/badge/nginx-1.7.7-orange.svg?style=flat-square
 
@@ -13,9 +17,11 @@ nginx-ssl-proxy
 
 ```
 docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rnbwd/nginx-ssl-proxy
-
-docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true [...]
 ```
+
+`docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true [...]`
+
+Use env vars to reverse-proxy docker containers, REDIRECT is optional
 
 ### Important Info
 
