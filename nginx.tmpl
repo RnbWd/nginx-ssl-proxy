@@ -12,45 +12,56 @@ map $http_upgrade $proxy_connection {
   ''      '';
 }
 
+gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+access_log /proc/self/fd/1;
+error_log /proc/self/fd/2;
+
+# HTTP 1.1 support
+proxy_http_version 1.1;
+proxy_buffering off;
+proxy_set_header Host $http_host;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection $proxy_connection;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $proxy_x_forwarded_proto;
+
 server {
-	listen 80 default_server;
-	server_name _; # This is just an invalid value which will never trigger on a real hostname.
-	error_log /proc/self/fd/2;
-	access_log /proc/self/fd/1;
-	return 503;
+  listen 80 default_server;
+  server_name _; # This is just an invalid value which will never trigger on a real hostname.
+  error_log /proc/self/fd/2;
+  access_log /proc/self/fd/1;
+  return 503;
 }
 
 {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
 upstream {{ $host }} {
-
-{{ range $index, $value := $containers }}
-
-	{{ $addrLen := len $value.Addresses }}
-	{{/* If only 1 port exposed, use that */}}
-	{{ if eq $addrLen 1 }}
-		{{ with $address := index $value.Addresses 0 }}
-		   # {{$value.Name}}
-		   server {{ $address.IP }}:{{ $address.Port }};
-		{{ end }}
-
-	{{/* If more than one port exposed, use the one matching VIRTUAL_PORT env var */}}
-	{{ else if $value.Env.VIRTUAL_PORT }}
-		{{ range $i, $address := $value.Addresses }}
-		   {{ if eq $address.Port $value.Env.VIRTUAL_PORT }}
-		   # {{$value.Name}}
-		   server {{ $address.IP }}:{{ $address.Port }};
-		   {{ end }}
-		{{ end }}
-
-	{{/* Else default to standard web port 80 */}}
-	{{ else }}
-		{{ range $i, $address := $value.Addresses }}
-			{{ if eq $address.Port "80" }}
-			# {{$value.Name}}
-			server {{ $address.IP }}:{{ $address.Port }};
-			{{ end }}
-		{{ end }}
-	{{ end }}
+{{ range $container := $containers }}
+  {{ $addrLen := len $container.Addresses }}
+  {{/* If only 1 port exposed, use that */}}
+  {{ if eq $addrLen 1 }}
+    {{ with $address := index $container.Addresses 0 }}
+       # {{$container.Name}}
+       server {{ $address.IP }}:{{ $address.Port }};
+    {{ end }}
+  {{/* If more than one port exposed, use the one matching VIRTUAL_PORT env var */}}
+  {{ else if $container.Env.VIRTUAL_PORT }}
+    {{ range $address := .Addresses }}
+       {{ if eq $address.Port $container.Env.VIRTUAL_PORT }}
+       # {{$container.Name}}
+       server {{ $address.IP }}:{{ $address.Port }};
+       {{ end }}
+    {{ end }}
+  {{/* Else default to standard web port 80 */}}
+  {{ else }}
+    {{ range $address := $container.Addresses }}
+      {{ if eq $address.Port "80" }}
+      # {{$container.Name}}
+      server {{ $address.IP }}:{{ $address.Port }};
+      {{ end }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 }
 
@@ -62,27 +73,15 @@ upstream {{ $host }} {
 	}
 {{ else }}
 	server {
-		gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    server_name {{ $host }};
 
-		server_name {{ $host }};
-		proxy_buffering off;
-		error_log /proc/self/fd/2;
-		access_log /proc/self/fd/1;
-
-		location / {
-			proxy_pass http://{{ $host }};
-			proxy_set_header Host $http_host;
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-			proxy_set_header X-Forwarded-Proto $proxy_x_forwarded_proto;
-
-			# HTTP 1.1 support
-			proxy_http_version 1.1;
-			proxy_set_header Upgrade $http_upgrade;
-			proxy_set_header Connection $proxy_connection;
-		}
-	}
+    location / {
+      proxy_pass http://{{ $host }};
+    }
+  }
 {{ end }}
+
+# ssl support
 # https://wiki.mozilla.org/Security/Server_Side_TLS#Nginx
 server {
   listen 443 ssl;
@@ -110,20 +109,8 @@ server {
   ssl_stapling on;
   ssl_stapling_verify on;
 
-  error_log /proc/self/fd/2;
-	access_log /proc/self/fd/1;
-
   location / {
     proxy_pass http://{{ $host }};
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme; 
-
-    # HTTP 1.1 support
-		proxy_http_version 1.1;
-		proxy_set_header Upgrade $http_upgrade;
-		proxy_set_header Connection $proxy_connection;
 		proxy_redirect http://{{ $host }} https://{{ $host }};
   }	
 }
