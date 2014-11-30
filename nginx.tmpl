@@ -67,14 +67,13 @@ upstream {{ $host }} {
 
 {{ with $value := index $containers 0 }}
 {{ if $value.Env.REDIRECT }}
-	server {
+  server {
 		server_name {{ $host }};
 		rewrite ^/(.*) https://{{ $host }}/$1 permanent;
 	}
 {{ else }}
-	server {
+  server {
     server_name {{ $host }};
-
     location / {
       proxy_pass http://{{ $host }};
     }
@@ -111,7 +110,7 @@ server {
 
   location / {
     proxy_pass http://{{ $host }};
-		proxy_redirect http://{{ $host }} https://{{ $host }};
+    proxy_redirect http://{{ $host }} https://{{ $host }};
   }	
 }
 {{ end }}
