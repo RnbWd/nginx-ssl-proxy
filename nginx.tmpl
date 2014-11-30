@@ -12,7 +12,12 @@ map $http_upgrade $proxy_connection {
   ''      '';
 }
 
+# One worker per CPU-core.
+worker_processes  1;
+worker_connections 1024;
+
 gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+client_max_body_size 50M;
 
 access_log /proc/self/fd/1;
 error_log /proc/self/fd/2;
@@ -88,10 +93,10 @@ server {
 
   ssl_certificate /etc/nginx/certs/{{ $host }}.crt;
   ssl_certificate_key /etc/nginx/certs/{{ $host }}.key;
-  #ssl_session_timeout 10m;
-  #ssl_session_cache shared:SSL:10m;
-  ssl_session_timeout 5m;
-  ssl_session_cache shared:SSL:50m;
+  ssl_session_timeout 10m;
+  ssl_session_cache shared:SSL:10m;
+  #ssl_session_timeout 5m;
+  #ssl_session_cache shared:SSL:50m;
 
   # Diffie-Hellman parameter for DHE ciphersuites, recommended 2048 bits
   # ssl_dhparam /path/to/dhparam.pem;
