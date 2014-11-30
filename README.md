@@ -14,7 +14,10 @@ Tags: *trusty (latest) - utopic*
 ## Usage
 
 ```
-docker run -d -p 80:80 -p 443:443 -v <certs-dir>:/etc/nginx/certs -v /var/run/docker.sock:/tmp/docker.sock rnbwd/nginx-ssl-proxy
+docker run -d -p 80:80 -p 443:443 \
+  -v <certs-dir>:/etc/nginx/certs \
+  -v /var/run/docker.sock:/tmp/docker.sock \
+  --name ssl-proxy rnbwd/nginx-ssl-proxy
 ```
 
 `docker run -e VIRTUAL_HOST=foo.bar.com  -e REDIRECT=true [...]`
