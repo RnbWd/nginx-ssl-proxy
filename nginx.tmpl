@@ -12,11 +12,9 @@ map $http_upgrade $proxy_connection {
   ''      '';
 }
 
-# One worker per CPU-core.
-worker_processes  1;
-worker_connections 1024;
-
 gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+# Prevent 413 Request Entity Too Large Error
 client_max_body_size 50M;
 
 access_log /proc/self/fd/1;
