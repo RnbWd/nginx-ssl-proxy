@@ -13,9 +13,7 @@ map $http_upgrade $proxy_connection {
 }
 
 gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-
-# Prevent 413 Request Entity Too Large Error
-client_max_body_size 50M;
+client_max_body_size 300m;
 
 access_log /proc/self/fd/1;
 error_log /proc/self/fd/2;
@@ -82,34 +80,32 @@ upstream {{ $host }} {
 {{/* Use the cert specifid on the container or fallback to the best vhost match */}}
 {{ $cert := (coalesce $certName $vhostCert) }}
 
-{{ if (ne $cert "") }}
+{{ if (and (ne $cert "") (exists (printf "/etc/nginx/certs/%s.crt" $cert)) (exists (printf "/etc/nginx/certs/%s.key" $cert))) }}
 
 server {
-	server_name {{ $host }};
-	rewrite ^/(.*) https://{{ $host }}/$1 permanent;
+  server_name {{ $host }};
+  rewrite ^(.*) https://{{ $host }}$1 permanent;
 }
 
 server {
-  listen 443 ssl;
   server_name {{ $host }};
+  listen 443 ssl;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA;
+
+  ssl_prefer_server_ciphers on;
+  ssl_session_timeout 5m;
+  ssl_session_cache shared:SSL:50m;
 
   ssl_certificate /etc/nginx/certs/{{ (printf "%s.crt" $cert) }};
   ssl_certificate_key /etc/nginx/certs/{{ (printf "%s.key" $cert) }};
-
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
-  ssl_prefer_server_ciphers on;
-
-  ssl_session_timeout 5m;
-  ssl_session_cache shared:SSL:50m;
-  ssl_stapling on;
-  ssl_stapling_verify on;
 
   add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 
   location / {
     proxy_pass http://{{ $host }};
-  }	
+  }
 }
 {{ else }}
 
