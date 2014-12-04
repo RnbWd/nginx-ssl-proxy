@@ -1,6 +1,6 @@
 nginx-ssl-proxy 
 ===============
-
+!! DEPRECIATED NOW THAT [nginx-proxy][2] supports ssl
 [![latest][docker-badge]](https://registry.hub.docker.com/u/rnbwd/nginx-ssl-proxy/)
 [![nginx][nginx-badge]](http://nginx.org/en/CHANGES)
 
